@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const sentry = require('@sentry/node');
 
 sentry.init({
-    dsn: 'https://d9836bf33fe0411a90bf9156d5f2ccb3@o560245.ingest.sentry.io/5695641', //https://ae4abb8184284190aacd6320443768f0@o406827.ingest.sentry.io/5662099',
+    dsn: 'https://ae4abb8184284190aacd6320443768f0@o406827.ingest.sentry.io/5662099',
     tracesSampleRate: 1.0,
 });
 
@@ -26,10 +26,9 @@ sentry.init({
         'https://produto.mercadolivre.com.br/MLB-1209138017',
         'https://produto.mercadolivre.com.br/MLB-1336948810',
         'https://produto.mercadolivre.com.br/MLB-1501021852',
-        'https://produto.mercadolivre.com.br/MLB-770179888',
+        'https://produto.mercadolivre.com.br/MLB-1441968323',
         'https://produto.mercadolivre.com.br/MLB-1631519713',
         'https://produto.mercadolivre.com.br/MLB-1481638721'
-        
     ]
         
     for (let i = 0; i <= url.length; i++) {
