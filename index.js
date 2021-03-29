@@ -52,19 +52,23 @@ sentry.init({
             let urlDom = urlProduto.includes('amazon')
             if(urlDom) {
                 let data = await page.evaluate(() => {
+                    try {
+                        name = document.querySelector('div[class="a-section a-spacing-none"] > h1').innerText;
+                        description = document.querySelector('div[id="feature-bullets"] > ul').innerText;
+                        price = document.querySelector('span[id="priceblock_ourprice"]') != null ? document.querySelector('span[id="priceblock_ourprice"]').innerText : 'Not available';
+                        available = document.querySelector('div[id="availability"]') != null ? true : false;
+                        pictures = (document.querySelector('div[id="altImages"] > ul').childElementCount - 3);
     
-                    name = document.querySelector('div[class="a-section a-spacing-none"] > h1').innerText;
-                    description = document.querySelector('div[id="feature-bullets"] > ul').innerText;
-                    price = document.querySelector('span[id="priceblock_ourprice"]') != null ? document.querySelector('span[id="priceblock_ourprice"]').innerText : 'Not available';
-                    available = document.querySelector('div[id="availability"]') != null ? true : false;
-                    pictures = (document.querySelector('div[id="altImages"] > ul').childElementCount - 3);
-
-                    return {
-                        name,
-                        description,
-                        price,
-                        available,
-                        pictures
+                        return {
+                            name,
+                            description,
+                            price,
+                            available,
+                            pictures
+                        }
+                    }
+                    catch (exc) {
+                        sentry.captureException(exc);
                     }
                 });
 
@@ -79,20 +83,24 @@ sentry.init({
             }
             else {
                 let data = await page.evaluate(() => {
-
-                    name = document.querySelector('div[class="ui-pdp-header__title-container"] > h1').innerText;
-                    description = document.querySelector('div[class="ui-pdp-description"] > p').innerText;
-                    price = document.querySelector('div[class="ui-pdp-price__second-line"] > span') != null ? document.querySelector('div[class="ui-pdp-price__second-line"] > span').innerText : 'Not available';
-                    available = document.querySelector('div[class="ui-pdp-stock-information"] > h3') != null ? true : false;
-                    pictures = (document.querySelector('div[class="ui-pdp-gallery__column"]').childElementCount - 1) / 2;
-
-                    return {
-                        name,
-                        description,
-                        price,
-                        available,
-                        pictures
-                    }                    
+                    try {
+                        name = document.querySelector('div[class="ui-pdp-header__title-container"] > h1').innerText;
+                        description = document.querySelector('div[class="ui-pdp-description"] > p').innerText;
+                        price = document.querySelector('div[class="ui-pdp-price__second-line"] > span') != null ? document.querySelector('div[class="ui-pdp-price__second-line"] > span').innerText : 'Not available';
+                        available = document.querySelector('div[class="ui-pdp-stock-information"] > h3') != null ? true : false;
+                        pictures = (document.querySelector('div[class="ui-pdp-gallery__column"]').childElementCount - 1) / 2;
+    
+                        return {
+                            name,
+                            description,
+                            price,
+                            available,
+                            pictures
+                        }    
+                    }
+                    catch (exc) {
+                        sentry.captureException(exc);
+                    }           
                 });
 
                 try {
